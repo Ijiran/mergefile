@@ -16,7 +16,7 @@ spring:
       #基本属性
       url: jdbc:mysql://localhost:3306/mergefile?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
-      password: root
+      password: 123456!
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -34,6 +34,10 @@ spring:
       #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1024MB
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml

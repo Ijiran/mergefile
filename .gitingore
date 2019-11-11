@@ -59,7 +59,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 ### Maven template
-target/
+target/classes
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
