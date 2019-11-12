@@ -39,7 +39,7 @@
 
     <div class="layui-body site-demo site-demo-body">
         <div class="layui-main">
-            <table class="layui-hide" id="test" lay-filter="merge"></table>
+            <table class="layui-hide" id="merge" lay-filter="merge"></table>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
                     <button class="layui-btn layui-btn-sm" lay-event="merge">文档合并</button>
@@ -62,16 +62,21 @@
         var table = layui.table;
         table.render({
             elem: '#merge',
-            url:'',
+            url:'/file/findFiles',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print'],
-            title: '文件记录表',
+            title: '文件信息表',
+            cellMinWidth: 80,
             cols: [
-                {type: 'checkbox', fixed: 'left'},
-                {field:'username', title:'文件名称', width:120},
-                {field:'sex', title:'上传人', width:80},
-                {field:'city', title:'上传时间', width:100, sort: true},
-                {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                [
+                    {type: 'checkbox', fixed: 'left'},
+                    {field:'id', title:'文件编号', width:120},
+                    {field:'file_name', title:'文件名称', width:120},
+                    {field:'upload_user', title:'上传人', width:80},
+                    {field:'file_path', title:'文件路径', width:100, sort: true},
+                    {field:'date_time', title:'上传时间', width:100, sort: true},
+                    {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ]
             ],
             page: true
         });
@@ -83,7 +88,7 @@
                     break;
                 case 'isAll':
                     break;
-            };
+            }
         });
     });
 </script>

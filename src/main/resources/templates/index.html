@@ -45,18 +45,10 @@
             </fieldset>
 
             <div class="layui-upload">
-                <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
-                <button type="button" class="layui-btn" id="test9">开始上传</button>
+                <button type="button" class="layui-btn layui-btn-normal" id="single">选择文件</button>
+                <button type="button" class="layui-btn" id="start">开始上传</button>
             </div>
 
-            <!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>拖拽上传</legend>
-            </fieldset>
-
-            <div class="layui-upload-drag" id="test10">
-                <i class="layui-icon"></i>
-                <p>点击上传，或将文件拖拽到此处</p>
-            </div>-->
         </div>
     </div>
 
@@ -67,7 +59,18 @@
 
 <script src="/layui/layui.js"></script>
 <script>
-
+    layui.use('upload', function() {
+        var $ = layui.jquery, upload = layui.upload;
+        upload.render({
+            elem: '#single',
+            url: '/upload',
+            auto: false,
+            accept: 'file',
+            bindAction: '#start',
+            done: function(res){
+            }
+        });
+    });
 </script>
 </body>
 </html>

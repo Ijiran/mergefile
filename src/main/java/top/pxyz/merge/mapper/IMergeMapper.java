@@ -2,6 +2,9 @@ package top.pxyz.merge.mapper;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Ijiran
  * @Package top.pxyz.merge.mapper
@@ -10,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IMergeMapper {
 
-
+    List<Map<String,String>> findFiles();
 
 }

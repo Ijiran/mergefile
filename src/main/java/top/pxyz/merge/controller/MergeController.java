@@ -2,6 +2,7 @@ package top.pxyz.merge.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import top.pxyz.common.PController;
@@ -9,6 +10,9 @@ import top.pxyz.common.Result;
 import top.pxyz.merge.service.IMergeService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ijiran
@@ -65,6 +69,16 @@ public class MergeController extends PController {
         String fileName = file.getOriginalFilename();
         System.out.println(fileName);
         return result("fileName",fileName);
+    }
+
+    /**
+     * 查询文件信息列表
+     */
+    @RequestMapping("/file/findFiles")
+    @ResponseBody
+    public String findFiles(){
+        List<Map<String,String>> list = mergeService.findFiles();
+        return toJson(list);
     }
 
 }

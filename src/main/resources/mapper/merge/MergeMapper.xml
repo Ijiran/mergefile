@@ -3,6 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.pxyz.merge.mapper.IMergeMapper" >
 
-
+    <select id="findFiles" resultType="java.util.Map">
+        SELECT ID,FILE_NAME,UPLOAD_USER,FILE_PATH,DATE_TIME FROM P_FILE_INFO
+    </select>
 
 </mapper>

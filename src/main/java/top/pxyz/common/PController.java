@@ -1,5 +1,11 @@
 package top.pxyz.common;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Ijiran
  * @Package top.pxyz.common
@@ -18,6 +24,24 @@ public class PController {
         if(message!=null)result.setMessage(message);
         if(object!=null)result.setData(object);
         return result;
+    }
+
+    /**
+     * list转json
+     * @param list
+     * @return
+     */
+    public String toJson(List<?> list){
+        return JSON.toJSONString(list);
+    }
+
+    /**
+     * map转json
+     * @param map
+     * @return
+     */
+    public String toJson(Map<?,?> map){
+        return JSON.toJSONString(map);
     }
 
 }

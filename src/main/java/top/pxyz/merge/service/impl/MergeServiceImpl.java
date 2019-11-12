@@ -5,6 +5,8 @@ import top.pxyz.merge.mapper.IMergeMapper;
 import top.pxyz.merge.service.IMergeService;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ijiran
@@ -17,6 +19,9 @@ public class MergeServiceImpl implements IMergeService {
     @Resource
     private IMergeMapper mergeMapper;
 
-
+    public List<Map<String, String>> findFiles(){
+        List<Map<String,String>> list = mergeMapper.findFiles();
+        return list;
+    }
 
 }

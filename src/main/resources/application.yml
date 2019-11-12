@@ -14,9 +14,9 @@ spring:
       filters: stat
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
-      url: jdbc:mysql://localhost:3306/mergefile?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-      username: root
-      password: 123456!
+      url: jdbc:mysql://47.100.191.216:3306/mergefile
+      username: rung
+      password: Password1!
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -40,7 +40,7 @@ spring:
       max-request-size: 1024MB
 
 mybatis:
-  mapper-locations: classpath:mapper/**.xml
+  mapper-locations: classpath:mapper/**/*.xml
 
 # thymeleaf 相关设置
 thymeleaf:
