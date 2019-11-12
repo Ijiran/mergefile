@@ -14,9 +14,9 @@ spring:
       filters: stat
       driver-class-name: com.mysql.jdbc.Driver
       #基本属性
-      url: jdbc:mysql://47.100.191.216:3306/mergefile
-      username: rung
-      password: Password1!
+      url: jdbc:mysql://localhost:3306/mergefile
+      username:
+      password:
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
