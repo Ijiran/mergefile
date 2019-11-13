@@ -3,6 +3,7 @@ package top.pxyz.common;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,19 @@ public class PController {
      * @return
      */
     public String toJson(Map<?,?> map){
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 转PageJson
+     * @param list
+     * @return
+     */
+    public String toPageJson(List<?> list){
+        Map<String,Object> map = new HashMap<>();
+        map.put("code","0");
+        map.put("data",list);
+        map.put("msg","");
         return JSON.toJSONString(map);
     }
 

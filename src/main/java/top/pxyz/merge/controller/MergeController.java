@@ -78,7 +78,7 @@ public class MergeController extends PController {
     @ResponseBody
     public String findFiles(){
         List<Map<String,String>> list = mergeService.findFiles();
-        return toJson(list);
+        return toPageJson(list);
     }
 
 }
