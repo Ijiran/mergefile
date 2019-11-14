@@ -17,7 +17,7 @@ public class POIUtils {
      * @param is
      * @return
      */
-    private static String getDtd(InputStream is){
+    public static String getDtd(InputStream is){
         String dtd = "";
         if(getFileType(is) == FileMagic.OLE2){
             dtd = "doc";
@@ -56,7 +56,7 @@ public class POIUtils {
      * @param is
      * @return
      */
-    public static FileMagic getFileType(InputStream is){
+    private static FileMagic getFileType(InputStream is){
         try {
             return FileMagic.valueOf(FileMagic.prepareToCheckMagic(is));
         } catch (Exception e) {

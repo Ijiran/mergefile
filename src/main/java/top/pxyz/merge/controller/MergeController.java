@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import top.pxyz.check.service.ICheckService;
 import top.pxyz.common.PController;
 import top.pxyz.common.Result;
 import top.pxyz.merge.service.IMergeService;
@@ -24,6 +25,9 @@ public class MergeController extends PController {
 
     @Resource
     private IMergeService mergeService;
+
+    @Resource
+    private ICheckService checkService;
 
     /**
      * 跳转单个上传文件页面
@@ -68,6 +72,12 @@ public class MergeController extends PController {
         //获取文件名
         String fileName = file.getOriginalFilename();
         System.out.println(fileName);
+        try {
+            checkService.checkDocTest(file.getInputStream());
+//            checkService.checkDocxTest(file.getInputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return result("fileName",fileName);
     }
 
