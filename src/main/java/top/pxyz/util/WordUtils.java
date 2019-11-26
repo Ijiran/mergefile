@@ -88,4 +88,18 @@ public class WordUtils {
 
     }
 
+    /**
+     * 获取序号设置字号XML
+     * 有待完善
+     * @param fontSize
+     * @return
+     */
+    public static String getNumberingXMLString(int fontSize) {
+        return  "<w:abstractNum xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" w:abstractNumId=\"0\">"
+                + "<w:multiLevelType w:val=\"hybridMultilevel\"/>"
+                + "<w:lvl w:ilvl=\"0\"><w:start w:val=\"1\"/><w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/>"
+                + "<w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:sz w:val=\"" + fontSize*2 +"\"/><w:szCs w:val=\""+fontSize*2 +"\"/></w:rPr></w:lvl>"
+                + "</w:abstractNum>";
+    }
+
 }

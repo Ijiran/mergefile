@@ -4,7 +4,7 @@
 
 ## <!--可选是否上传FTP服务器-->
 
-####2019.11.20 抱歉，我被Microsoft的文档眯了眼睛，在深入探索POI时，找到Microsoft官方整理出来的一些文档
+#### 2019.11.20 抱歉，我被Microsoft的文档眯了眼睛，在深入探索POI时，找到Microsoft官方整理出来的一些文档
 
 旧版文档：https://docs.microsoft.com/zh-cn/previous-versions/
 
@@ -16,9 +16,12 @@
 
 我尽量从文档的角度来记录这些
 
-###目前已经初步完成的
+### 目前已经初步完成的
 1. 将一个文档（包括样式，但除了序号以外），完整的输出到新文档中。
-2. 下一步将要对文档进行合并测试。
+2. 同时合并两个文档
+3. 下一步要进行标题的选择设置
+
+因为时间匆忙，代码目前比较乱，过后会将代码优化一下。
 
 #### word. *doc文件*
 
@@ -50,7 +53,8 @@ XWPFRun对象.getColor();
 如何判断文本是否粗体？
 XWPFRun对象.getBlod();
 
-还有很多方法，暂时写在了代码里，top.pxyz.check.service.impl.CheckServiceImpl.java类中，下次我会认真整理一下。
+还有很多方法的使用说明，暂时写在了代码里，top.pxyz.check.service.impl.CheckServiceImpl.java类中，下次我会认真整理一下。
 
+序号问题已解决一部分，不过还没有彻底解决，下一步需要解析XML。
 ```
 

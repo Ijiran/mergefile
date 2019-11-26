@@ -12,6 +12,10 @@ import top.pxyz.common.Result;
 import top.pxyz.merge.service.IMergeService;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +80,10 @@ public class MergeController extends PController {
         System.out.println(fileName);
         try {
 //            checkService.checkDocTest(file.getInputStream());
-            checkService.checkDocxTest(file.getInputStream());
+//            checkService.checkDocxTest(file.getInputStream());
+            File target = new File("C:\\Users\\Ijiran\\Desktop\\2.docx");
+            InputStream in = new FileInputStream(target);
+            mergeService.mergeTest(file.getInputStream(),in);
         }catch (Exception e){
             e.printStackTrace();
         }
