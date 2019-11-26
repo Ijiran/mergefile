@@ -16,6 +16,10 @@
 
 我尽量从文档的角度来记录这些
 
+###目前已经初步完成的
+1. 将一个文档（包括样式，但除了序号以外），完整的输出到新文档中。
+2. 下一步将要对文档进行合并测试。
+
 #### word. *doc文件*
 
 ```
@@ -29,7 +33,24 @@ XWPFDocument //文档主对象
 
 XWPFParagraph //文档段落对象
 
+如何获取段落的对齐方式？
+XWPFParagraph对象.getAlignment();
+
 XWPFRun //文档文本对象
+
+如何获取文本字体？
+XWPFRun对象.getFontFamily();
+
+如何获取文本字号？
+XWPFRun对象.getFontSize();
+
+如何获取文本字体颜色？
+XWPFRun对象.getColor();
+
+如何判断文本是否粗体？
+XWPFRun对象.getBlod();
+
+还有很多方法，暂时写在了代码里，top.pxyz.check.service.impl.CheckServiceImpl.java类中，下次我会认真整理一下。
 
 ```
 

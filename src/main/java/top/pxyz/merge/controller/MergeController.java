@@ -1,6 +1,7 @@
 package top.pxyz.merge.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,13 +69,14 @@ public class MergeController extends PController {
      * transferTo
      */
     @RequestMapping("/upload")
+    @ResponseBody
     public Result upload(MultipartFile file){
         //获取文件名
         String fileName = file.getOriginalFilename();
         System.out.println(fileName);
         try {
-            checkService.checkDocTest(file.getInputStream());
-//            checkService.checkDocxTest(file.getInputStream());
+//            checkService.checkDocTest(file.getInputStream());
+            checkService.checkDocxTest(file.getInputStream());
         }catch (Exception e){
             e.printStackTrace();
         }

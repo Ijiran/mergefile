@@ -21,6 +21,6 @@ public interface ICheckService {
      * docx文档测试
      * @param is
      */
-    void checkDocxTest(InputStream is) throws IOException;
+    void checkDocxTest(InputStream is) throws Exception;
 
 }
