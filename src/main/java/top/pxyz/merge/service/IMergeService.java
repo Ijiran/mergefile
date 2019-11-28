@@ -13,5 +13,7 @@ public interface IMergeService {
 
     List<Map<String, String>> findFiles();
 
-    void mergeTest(InputStream source,InputStream target) throws Exception;
+    void mergeTest(InputStream source, InputStream target) throws Exception;
+
+    void mergeTestByJsfw(InputStream source, InputStream target) throws Exception;
 }

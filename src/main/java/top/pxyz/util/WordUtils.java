@@ -1,7 +1,6 @@
 package top.pxyz.util;
 
 import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;

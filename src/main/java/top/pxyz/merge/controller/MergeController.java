@@ -1,7 +1,6 @@
 package top.pxyz.merge.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,11 +11,6 @@ import top.pxyz.common.Result;
 import top.pxyz.merge.service.IMergeService;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,11 +73,13 @@ public class MergeController extends PController {
         String fileName = file.getOriginalFilename();
         System.out.println(fileName);
         try {
+//            System.out.println("文件格式："+ POIUtils.getDtd(file.getInputStream()));
 //            checkService.checkDocTest(file.getInputStream());
-//            checkService.checkDocxTest(file.getInputStream());
-            File target = new File("C:\\Users\\Ijiran\\Desktop\\2.docx");
-            InputStream in = new FileInputStream(target);
-            mergeService.mergeTest(file.getInputStream(),in);
+            checkService.checkDocxTest(file.getInputStream());
+//            File target = new File("C:\\Users\\mingliao\\Desktop\\zuizhong.docx");
+//            InputStream in = new FileInputStream(target);
+//            mergeService.mergeTest(file.getInputStream(),in);
+//            mergeService.mergeTestByJsfw(file.getInputStream(),in);
         }catch (Exception e){
             e.printStackTrace();
         }

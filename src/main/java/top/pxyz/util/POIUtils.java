@@ -3,6 +3,7 @@ package top.pxyz.util;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSpacing;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STLineSpacingRule;
@@ -18,6 +19,28 @@ import java.math.BigInteger;
  * @date 2019-11-09 21:21
  */
 public class POIUtils {
+
+    /**
+     * 复制样式和文本到目标行
+     * @param source
+     * @param target
+     */
+    public static void copyStyleAndText(XWPFRun source,XWPFRun target){
+        target.setColor(source.getColor());
+        target.setBold(source.isBold());
+        target.setCapitalized(source.isCapitalized());
+        target.setText(source.getText(0));
+        if(-1 == source.getFontSize()){
+            target.setFontSize(16);
+        }else{
+            target.setFontSize(source.getFontSize());
+        }
+        if("Times New Roman".equals(source.getFontFamily())){
+            target.setFontFamily("仿宋_GB2312");
+        }else {
+            target.setFontFamily(source.getFontFamily());
+        }
+    }
 
     /**
      * 插入分页符

@@ -1,6 +1,8 @@
 package top.pxyz.merge.service.impl;
 
 import ch.qos.logback.core.util.FileUtil;
+import com.mysql.jdbc.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTLvl;
@@ -102,10 +104,11 @@ public class MergeServiceImpl implements IMergeService {
             newParagraph.setSpacingLineRule(sourceParagraph.getSpacingLineRule());//间距线规则
             newParagraph.setVerticalAlignment(sourceParagraph.getVerticalAlignment());//垂直对齐
 
-            //设置标题
-            newParagraph.setStyle("Heading2");
-
+            String str = "";
             for (XWPFRun run : xwpfRuns){
+                if(!StringUtils.isNullOrEmpty(run.getText(0))){
+                    str = str + run.getText(0);
+                }
                 XWPFRun newXwpfrun = newParagraph.createRun();
                 newXwpfrun.setColor(run.getColor());
                 newXwpfrun.setBold(run.isBold());
@@ -114,11 +117,17 @@ public class MergeServiceImpl implements IMergeService {
                 newXwpfrun.setFontSize(run.getFontSize());
                 newXwpfrun.setText(run.getText(0));
             }
+            System.out.println(str);
+            //设置标题
+            if("10千伏线损管理技术支撑".equals(str)){
+                newParagraph.getCTP().addNewPPr().addNewOutlineLvl().setVal(BigInteger.ONE);
+            }
+
         }
 
         FileOutputStream fos = null;
         try {
-            File file = new File("C:\\Users\\Ijiran\\Desktop\\8.docx");
+            File file = new File("C:\\Users\\mingliao\\Desktop\\3.docx");
             fos = new FileOutputStream(file);
             targetD.write(fos);
         } finally {
@@ -127,6 +136,102 @@ public class MergeServiceImpl implements IMergeService {
             }
         }
 
+    }
+
+    public void mergeTestByJsfw(InputStream source, InputStream target) throws Exception{
+        XWPFDocument sourceD = new XWPFDocument(source);
+        XWPFDocument targetD = new XWPFDocument(target);
+
+        //先在合并前创建一个分页符，以便隔开
+        POIUtils.insertPageBreak(targetD);
+
+        boolean flag = true;
+
+        //开始合并
+        List<XWPFParagraph> sourceDParagraphs = sourceD.getParagraphs();
+        for (int i = 0; i < sourceDParagraphs.size(); i++){
+            XWPFParagraph sourceParagraph = sourceDParagraphs.get(i);
+            XWPFParagraph newParagraph = targetD.createParagraph();
+            List<XWPFRun> xwpfRuns = sourceParagraph.getRuns();
+
+            newParagraph.setAlignment(sourceParagraph.getAlignment());//段落对齐
+            newParagraph.setFirstLineIndent(sourceParagraph.getFirstLineIndent());//段落第一行缩进
+            newParagraph.setFontAlignment(sourceParagraph.getFontAlignment());//段落字体对齐
+            newParagraph.setKeepNext(sourceParagraph.isKeepNext());
+            newParagraph.setPageBreak(sourceParagraph.isPageBreak());//是否分页符
+            newParagraph.setVerticalAlignment(sourceParagraph.getVerticalAlignment());//垂直对齐
+
+            if(sourceParagraph.getSpacingBetween() < 0){
+                newParagraph.setSpacingBetween(1.5);//间距
+            }else{
+                newParagraph.setSpacingBetween(sourceParagraph.getSpacingBetween());//间距
+            }
+
+            if(sourceParagraph.getNumID()!=null){
+                System.out.println("有序号");
+            }
+
+            String str = "";
+            for (XWPFRun run : xwpfRuns){
+                if(!StringUtils.isNullOrEmpty(run.getText(0))){
+                    str = str + run.getText(0);
+                }
+            }
+
+            //设置标题
+            if(!StringUtils.isNullOrEmpty(str)&&flag){
+                flag = false;
+                newParagraph.getCTP().addNewPPr().addNewOutlineLvl().setVal(BigInteger.ONE);
+                XWPFRun newXwpfrun = newParagraph.createRun();
+                newXwpfrun.setBold(true);
+                newXwpfrun.setFontFamily("黑体");
+                newXwpfrun.setFontSize(16);
+                newXwpfrun.setText(xwpfRuns.get(0).getText(0));
+            }else if(str.contains("计划目标")&&str.length()<=6) {
+                XWPFRun newXwpfrun = newParagraph.createRun();
+                newXwpfrun.setText("一、计划目标");
+                newXwpfrun.setBold(true);
+                newXwpfrun.setFontFamily("黑体");
+                newXwpfrun.setFontSize(16);
+            }else if(str.contains("工作开展情况")&&str.length()<=8) {
+                XWPFRun newXwpfrun = newParagraph.createRun();
+                newXwpfrun.setText("二、工作开展情况");
+                newXwpfrun.setBold(true);
+                newXwpfrun.setFontFamily("黑体");
+                newXwpfrun.setFontSize(16);
+            }else if(str.contains("项目成效")&&str.length()<=6) {
+                XWPFRun newXwpfrun = newParagraph.createRun();
+                newXwpfrun.setText("三、项目成效");
+                newXwpfrun.setBold(true);
+                newXwpfrun.setFontFamily("黑体");
+                newXwpfrun.setFontSize(16);
+            }else if(str.contains("工作建议")&&str.length()<=6) {
+                XWPFRun newXwpfrun = newParagraph.createRun();
+                newXwpfrun.setText("四、工作建议");
+                newXwpfrun.setBold(true);
+                newXwpfrun.setFontFamily("黑体");
+                newXwpfrun.setFontSize(16);
+            }else{//非固定格式
+                for(XWPFRun run : xwpfRuns){
+                    XWPFRun newXwpfrun = newParagraph.createRun();
+                    POIUtils.copyStyleAndText(run,newXwpfrun);
+                }
+            }
+
+        }
+
+        FileOutputStream fos = null;
+        try {
+            File file = new File("C:\\Users\\mingliao\\Desktop\\zuizhong.docx");
+            fos = new FileOutputStream(file);
+            targetD.write(fos);
+        } finally {
+            if (fos != null) {
+                fos.close();
+            }
+        }
+
+        System.out.println("success");
     }
 
 }

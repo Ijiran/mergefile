@@ -1,5 +1,7 @@
 package top.pxyz.check.service.impl;
 
+import com.mysql.jdbc.StringUtils;
+import org.apache.poi.hwpf.model.PicturesTable;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.springframework.stereotype.Service;
@@ -39,12 +41,29 @@ public class CheckServiceImpl implements ICheckService {
         FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Ijiran\\Desktop\\7.docx"));
         XWPFDocument xwpfDocument = new XWPFDocument(is);
 
+        //图片
+        List<XWPFPictureData> xwpfDocumentAllPictures = xwpfDocument.getAllPictures();
+        for (XWPFPictureData xwpfPictureData: xwpfDocumentAllPictures){
+            System.out.println("图片路径name及格式contentType-getPackagePart："+xwpfPictureData.getPackagePart());
+            System.out.println("图片-getChecksum："+xwpfPictureData.getChecksum());
+//            System.out.println("图片数据-getData："+new String(xwpfPictureData.getData()));
+            System.out.println("图片名称-getFileName："+xwpfPictureData.getFileName());
+            System.out.println("图片建议文件扩展名-suggestFileExtension："+xwpfPictureData.suggestFileExtension());
+            System.out.println("图片类型-getPictureType："+xwpfPictureData.getPictureType());
+        }
+
+        //段落
         List<XWPFParagraph> docx1Paragraphs = xwpfDocument.getParagraphs();
         for (int i = 0; i < docx1Paragraphs.size(); i++){
             XWPFParagraph docx1Paragraph = docx1Paragraphs.get(i);
 
             XWPFParagraph newParagraph = newDocument.createParagraph();
             List<XWPFRun> xwpfRuns = docx1Paragraph.getRuns();
+
+            List<XWPFTable> xwpfTables = xwpfDocument.getTables();
+
+//            XWPFTable xwpfTable = xwpfTables.get(0);
+//            xwpfTable.getCTTbl().
 
             //因为序号没有真正存储到word的xml中，所以单独做处理。
             if(docx1Paragraph.getNumID()!=null){
@@ -88,8 +107,8 @@ public class CheckServiceImpl implements ICheckService {
             newParagraph.setAlignment(docx1Paragraph.getAlignment());//段落对齐
             newParagraph.setFirstLineIndent(docx1Paragraph.getFirstLineIndent());//段落第一行缩进
             newParagraph.setFontAlignment(docx1Paragraph.getFontAlignment());//段落字体对齐
-//            newParagraph.setIndentationFirstLine(docx1Paragraph.getIndentationFirstLine());
-            newParagraph.setSpacingAfter(docx1Paragraph.getSpacingAfter());
+            newParagraph.setIndentationFirstLine(docx1Paragraph.getIndentationFirstLine());
+//            newParagraph.setSpacingAfter(docx1Paragraph.getSpacingAfter());
 //            newParagraph.setSpacingAfterLines(docx1Paragraph.getSpacingAfterLines());
             newParagraph.setSpacingBefore(docx1Paragraph.getSpacingBefore());
 //            newParagraph.setSpacingBeforeLines(docx1Paragraph.getSpacingBeforeLines());
@@ -105,10 +124,10 @@ public class CheckServiceImpl implements ICheckService {
             newParagraph.setVerticalAlignment(docx1Paragraph.getVerticalAlignment());//垂直对齐
 //            newParagraph.setWordWrapped(docx1Paragraph.isWordWrapped());
 
-            //设置标题
-            newParagraph.setStyle("Heading2");
+            //设置标题（大纲级别）
+            newParagraph.getCTP().addNewPPr().addNewOutlineLvl().setVal(BigInteger.ONE);
 
-            /*System.out.println("段落XML-getCTP："+docx1Paragraph.getCTP());
+            System.out.println("段落XML-getCTP："+docx1Paragraph.getCTP());
             System.out.println("段落样式-getStyle："+docx1Paragraph.getStyle());
             System.out.println("脚注文本-getFootnoteText："+docx1Paragraph.getFootnoteText());
             System.out.println("序号格式-getNumFmt："+docx1Paragraph.getNumFmt());
@@ -126,19 +145,34 @@ public class CheckServiceImpl implements ICheckService {
             System.out.println("行后间距-getSpacingAfterLines："+docx1Paragraph.getSpacingAfterLines());
             System.out.println("行前间距-getSpacingBeforeLines："+docx1Paragraph.getSpacingBeforeLines());
             System.out.println("目前不清楚-isKeepNext："+docx1Paragraph.isKeepNext());
-            System.out.println("分页符-isPageBreak："+docx1Paragraph.isPageBreak());*/
+            System.out.println("分页符-isPageBreak："+docx1Paragraph.isPageBreak());
 
             for (XWPFRun run : xwpfRuns){
 
                 XWPFRun newXwpfrun = newParagraph.createRun();
-                newXwpfrun.setColor(run.getColor());
+//                newXwpfrun.setColor(run.getColor());
                 newXwpfrun.setBold(run.isBold());
                 newXwpfrun.setCapitalized(run.isCapitalized());
-                newXwpfrun.setFontFamily(run.getFontFamily());
-                newXwpfrun.setFontSize(run.getFontSize());
                 newXwpfrun.setText(run.getText(0));
 
-                /*System.out.println("字体颜色-getColor："+run.getColor());
+                if(!StringUtils.isNullOrEmpty(run.getColor())){
+                    newXwpfrun.setColor(run.getColor());
+                }
+
+                if(-1 == run.getFontSize()){
+                    newXwpfrun.setFontSize(16);
+                }else{
+                    newXwpfrun.setFontSize(run.getFontSize());
+                }
+
+                if("Times New Roman".equals(run.getFontFamily())){
+                    newXwpfrun.setFontFamily("仿宋_GB2312");
+                    System.out.println("\n\n\n\nXML格式-getCTR："+newXwpfrun.getCTR()+"\n\n\n");
+                }else {
+                    newXwpfrun.setFontFamily(run.getFontFamily());
+                }
+
+                System.out.println("字体颜色-getColor："+run.getColor());
                 System.out.println("XML格式-getCTR："+run.getCTR());
                 System.out.println("字符间距-getCharacterSpacing："+run.getCharacterSpacing());
                 System.out.println("字体类型-getFontFamily："+run.getFontFamily());
@@ -153,7 +187,7 @@ public class CheckServiceImpl implements ICheckService {
                 System.out.println("目前不清楚-getKerning："+run.getKerning());
                 System.out.println("是否粗体-isBold："+run.isBold());
                 System.out.println("是否大写-isCapitalized："+run.isCapitalized());
-                System.out.println("文本-getText："+run.getText(0));*/
+                System.out.println("文本-getText："+run.getText(0));
             }
         }
         newDocument.write(out);
